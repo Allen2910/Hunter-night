@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/2024_7_26.txt">
+        <file>2024_7_26.txt</file>
+    </qresource>
+    <qresource prefix="/"/>
+</RCC>

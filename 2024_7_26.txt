@@ -1,0 +1,8 @@
+i update some things
+1.i creeate the bullet and the main character
+2.i make the main character move using the keyboard
+3.i update the images
+
+things to do:
+make the goblin chase hunter
+make the bullet shoot by hunter

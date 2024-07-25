@@ -1,12 +1,19 @@
 #include <character.h>
 
 #define increase_unit_value 10
-character::character():hp(0), atk(0), def(0), alive(true){
+
+character::character()
+    :hp(0), atk(0), def(0), alive(true), x(0), y(0){
 
 }
 
 character::character(double hp, double atk, double def)
-    :hp(hp), atk(atk), def(def), alive(true){
+    :hp(hp), atk(atk), def(def), alive(true), x(0), y(0){
+
+}
+
+character::character(double hp, double atk, double def, int x, int y)
+    :hp(hp), atk(atk), def(def), alive(true), x(x), y(y){
 
 }
 

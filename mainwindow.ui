@@ -14,23 +14,36 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="goblin1">
+   <widget class="QLabel" name="label_goblin">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>90</y>
-      <width>321</width>
-      <height>451</height>
+      <x>50</x>
+      <y>40</y>
+      <width>281</width>
+      <height>371</height>
      </rect>
     </property>
     <property name="text">
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="resources.qrc">:/pictures/1.jpg</pixmap>
+     <pixmap>:/pictures/1.jpg</pixmap>
     </property>
     <property name="margin">
      <number>0</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_hunter">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>100</y>
+      <width>301</width>
+      <height>301</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
@@ -46,8 +59,6 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources>
-  <include location="resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

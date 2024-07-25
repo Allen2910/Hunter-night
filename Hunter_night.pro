@@ -12,11 +12,13 @@ SOURCES += \
     character.cpp \
     goblin.cpp \
     main.cpp \
+    main_character.cpp \
     mainwindow.cpp
 
 HEADERS += \
     character.h \
     goblin.h \
+    main_character.h \
     mainwindow.h
 
 FORMS += \

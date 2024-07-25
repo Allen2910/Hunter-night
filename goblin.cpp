@@ -5,18 +5,17 @@
 #include <QDebug>
 
 goblin::goblin()
-    :goblin_image1(":/pictures/1.jpg"){
+    :goblin_image1(":/images/15.jpg"), character(30,10,5){
     if(goblin_image1.isNull()){
         qDebug("Failed to load goblin image1");
     }
 }
 
 goblin::goblin(int x, int y)
-    :goblin_image1(":/pictures/1.jpg"){
+    :goblin_image1(":/images/15.jpg"), character(30,10,5){
     if(goblin_image1.isNull()){
         qDebug("Failed to load goblin image1");
     }
-    goblin_image1.scaled(100,100,Qt::KeepAspectRatio);
 }
 
 

@@ -1,9 +1,9 @@
 #ifndef GOBLIN_H
 #define GOBLIN_H
 
-#include <QImage>
+
 #include <character.h>
-#include <qicon.h>
+#include <qpixmap.h>
 
 class goblin:public character{
 public:

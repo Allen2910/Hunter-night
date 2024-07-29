@@ -22,11 +22,16 @@ public:
     friend class bullet;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void mousePressEvent(QMouseEvent*, int&, int&);
+    void mousePressEvent(QMouseEvent*);
     void keyPressEvent(QKeyEvent*);
+    int getHunterX()const;
+    int getHunterY()const;
+public slots:
+    void bulletShooting(bullet*, double, double);
 private:
     Ui::MainWindow *ui;
     // initalize the hunter in mainwindow first time
     main_character hunter;
+
 };
 #endif // MAINWINDOW_H

@@ -13,3 +13,5 @@ QPixmap main_character::get_main_character_image()const{
 main_character::~main_character(){
 
 }
+
+

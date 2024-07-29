@@ -2,12 +2,15 @@
 #include <bits/stdc++.h>
 #include <mainwindow.h>
 
-bullet::bullet(int x, int y)
-    :bulletImage(":/images/4.jpg"), x(x), y(y){
+bullet::bullet(int x, int y, QWidget* parent = nullptr)
+    : QLabel(parent), bulletImage(":/images/4.jpg"), x(x), y(y){
+    setGeometry(x, y, this->sizeWidth, this->sizeHeight);
+    setPixmap(bulletImage.scaled(sizeWidth, sizeHeight, Qt::KeepAspectRatioByExpanding));
 }
 int bullet::atk = 10;
-int bullet::size = 5;
-
+int bullet::sizeHeight = 200;
+int bullet::sizeWidth = 200;
+int bullet::speed = 40;
 
 QPixmap bullet::get_bulletImage()const{
     return bulletImage;
@@ -18,6 +21,23 @@ void bullet::increaseAtk(){
 }
 
 void bullet::increaseSize(){
-    size += 5;
+    sizeHeight *= 2;
+    sizeWidth *= 2;
+}
+
+void bullet::increasespeed(){
+    speed *= 2;
+}
+
+
+bullet::~bullet(){
+
+}
+
+int bullet::getX(){
+    return x;
+}
+int bullet::getY(){
+    return y;
 }
 

@@ -15,6 +15,7 @@ public:
     void show();
     int getX();
     int getY();
+    int getAtk()const;
     // image size
     static int sizeWidth;
     static int sizeHeight;

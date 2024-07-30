@@ -3,15 +3,21 @@
 
 #include <character.h>
 #include <main_character.h>
-#include <qpixmap.h>
+#include <QPixmap>
+#include <qwidget.h>
+#include <QLabel>
 
 class goblin:public character{
 public:
-    goblin();
-    goblin(int, int);
+    goblin(QWidget*);
+    goblin(QWidget*, int, int);
     QPixmap get_goblin_image()const;
-    void move(main_character&);
+    int getSpeed()const;
+    void getAttackedPoint(int);
 private:
-    QPixmap goblin_image1;
+    void getDamage(int);
+    QPixmap goblin_image;
+    int speed;
 };
 #endif // GOBLIN_H
+

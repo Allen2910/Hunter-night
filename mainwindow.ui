@@ -36,10 +36,10 @@
    <widget class="QLabel" name="label_hunter">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>100</y>
-      <width>301</width>
-      <height>301</height>
+      <x>520</x>
+      <y>150</y>
+      <width>251</width>
+      <height>261</height>
      </rect>
     </property>
     <property name="text">

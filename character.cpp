@@ -3,12 +3,17 @@
 #define increase_unit_value 10
 
 character::character()
-    :hp(0), atk(0), def(0), alive(true), x(0), y(0){
+    :hp(0), atk(0), def(0), alive(true), x(this->QLabel::x()), y(this->QLabel::y()){
 
 }
 
 character::character(double hp, double atk, double def)
-    :hp(hp), atk(atk), def(def), alive(true), x(0), y(0){
+    :hp(hp), atk(atk), def(def), alive(true), x(this->QLabel::x()), y(this->QLabel::y()){
+
+}
+
+character::character(QWidget *parent, double hp = 0, double atk = 0, double def = 0)
+    :QLabel(parent), hp(hp), atk(atk), def(def), alive(true), x(this->QLabel::x()), y(this->QLabel::y()){
 
 }
 
@@ -24,8 +29,16 @@ void character::attacked(character &target){
     }
 }
 
-bool character::dead_or_not(){
-    if(this->alive == false && this->hp < 0){
+double character::getX()const{
+    return this->QLabel::x();
+}
+
+double character::getY()const{
+    return this->QLabel::y();
+}
+
+bool character::isAlive(){
+    if(this->alive == false){
         return true;
     }
     return false;
@@ -42,6 +55,25 @@ void character::increase_defense(int value = increase_unit_value){
 void character::heal(int value = increase_unit_value){
     this->hp += value;
 }
+
+double character::getAtk()const{
+    return this->atk;
+}
+
+double character::getDef()const{
+    return this->def;
+}
+
+double character::getHp()const{
+    return this->hp;
+}
+
+void character::changeHp(double changePoint = 0){
+    this->hp -= changePoint;
+    if(this->hp <= 0) alive = false;
+}
+
+
 
 character::~character(){
 

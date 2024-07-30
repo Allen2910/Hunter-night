@@ -7,6 +7,7 @@
 #include <QMouseEvent>
 #include <main_character.h>
 #include <bullet.h>
+#include <goblin.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,16 +23,28 @@ public:
     friend class bullet;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void mousePressEvent(QMouseEvent*);
-    void keyPressEvent(QKeyEvent*);
-    int getHunterX()const;
-    int getHunterY()const;
+    void mousePressEvent(QMouseEvent*)override;
+    void keyPressEvent(QKeyEvent*)override;
+    void keyReleaseEvent(QKeyEvent*)override;
+    template<class T>
+    void chase(T*);
+    template<class T>
+    void chasing(T*, double, double);
+    template<class T>
+    void bulletHitMonster(bullet*, T*);
 public slots:
     void bulletShooting(bullet*, double, double);
+    void upgradePostion();
+protected:
+    template<class T>
+    bool isCollision(bullet*, T*);
+
 private:
     Ui::MainWindow *ui;
     // initalize the hunter in mainwindow first time
-    main_character hunter;
+    main_character *hunter = new main_character(this);
+    QSet<int> keysPressed;
+    QSet<goblin*> goblinList;
 
 };
 #endif // MAINWINDOW_H

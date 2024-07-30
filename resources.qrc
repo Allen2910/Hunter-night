@@ -20,4 +20,5 @@
         <file>images/9.jpg</file>
         <file>log.qrc</file>
     </qresource>
+    <qresource prefix="/log"/>
 </RCC>

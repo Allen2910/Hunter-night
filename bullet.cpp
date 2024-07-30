@@ -29,6 +29,9 @@ void bullet::increasespeed(){
     speed *= 2;
 }
 
+int bullet::getAtk()const{
+    return atk;
+}
 
 bullet::~bullet(){
 

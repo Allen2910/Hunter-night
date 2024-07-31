@@ -10,12 +10,19 @@
 #include <QtCore>
 #include <QTimer>
 #include <QObject>
+#include <QTime>
+#include <qpushbutton.h>
+
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    //QPushButton *startButton = new QPushButton("&Start", this);
+
 
     // put the hunter image on mainwindow
     hunter->show();
@@ -26,12 +33,13 @@ MainWindow::MainWindow(QWidget *parent)
     hunterTimer->start(8);
 
     // initalize the goblin1 in mainwindow first time
-    for(int i = 0; i < 10; i++){
+    for(int i = 0; i < 5; i++){
         goblin *label_goblin = new goblin(this,QRandomGenerator::global()->bounded(0,500), QRandomGenerator::global()->bounded(0,500));
         goblinList.insert(label_goblin);
         label_goblin->show();
-        chase(label_goblin);
+        chaseBy(label_goblin);
     }
+
 }
 
 
@@ -65,6 +73,44 @@ void MainWindow::mousePressEvent(QMouseEvent *event){
     }
 }
 
+// below is wriiten by chatgpt
+// i modify the parameter
+
+template<class T>
+void MainWindow::repel(T *monster, double unitSpeedX, double unitSpeedY) {
+    // 撞击的持续时间（毫秒）
+    const int duration = 500;
+    const int interval = 5; // 定时器间隔
+
+    // 计算每次定时器触发时的位移量
+    double displacementX = (unitSpeedX * interval / 1000.0)*5;
+    double displacementY = (unitSpeedY * interval / 1000.0)*5;
+
+    QPointer<QTimer> timer = new QTimer(this);
+    timer->setInterval(interval);
+
+    // 记录初始时间以判断何时停止
+    QTime startTime = QTime::currentTime();
+
+    connect(timer, &QTimer::timeout, [=]() mutable {
+        if (monster) {
+            // 计算已过去的时间
+            int elapsed = startTime.msecsTo(QTime::currentTime());
+
+            // 如果达到持续时间，停止计时器
+            if (elapsed > duration) {
+                timer->stop();
+                return;
+            }
+
+            // 更新怪物的位置
+            QPoint currentPos = monster->pos();
+            monster->move(currentPos.x() + displacementX, currentPos.y() + displacementY);
+        }
+    });
+
+    timer->start();
+}
 
 
 void MainWindow::bulletShooting(bullet *label_bullet, double unitSpeedX, double unitSpeedY) {
@@ -94,10 +140,12 @@ void MainWindow::bulletShooting(bullet *label_bullet, double unitSpeedX, double 
             label_bullet->deleteLater();
 
             // if the monter dead or not
-            if(monster->isAlive() <= 0){
+            if(!monster->isAlive()){
                 goblinList.remove(monster);
                 monster->clear();
                 monster->deleteLater();
+            }else{
+                repel(monster, unitSpeedX, unitSpeedY);
             }
 
             break;
@@ -128,18 +176,33 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event){
 void MainWindow::upgradePostion(){
     int newX = hunter->getX();
     int newY = hunter->getY();
-    if (keysPressed.contains(Qt::Key_W) && newY-hunter->getSpeedY() > 0) newY -= hunter->getSpeedY(); // 上
-    if (keysPressed.contains(Qt::Key_S) && newY+hunter->getSpeedY() < this->height()) newY += hunter->getSpeedY(); // 下
-    if (keysPressed.contains(Qt::Key_A) && newX-hunter->getSpeedX() > 0) newX -= hunter->getSpeedX(); // 左
-    if (keysPressed.contains(Qt::Key_D) && newX+hunter->getSpeedX() < this->width()) newX += hunter->getSpeedX(); // 右
+
+    int centerX = newX+(hunter->width())/2;
+    int centerY = newY+(hunter->height())/2;
+    if (keysPressed.contains(Qt::Key_W)){
+        if(centerY-hunter->getSpeedY() > 0) newY -= hunter->getSpeedY();
+        else newY = this->height();
+    }
+    if (keysPressed.contains(Qt::Key_S)){
+        if(centerY+hunter->getSpeedY() < this->height()) newY += hunter->getSpeedY(); // 下
+        else newY = 0;
+    }
+    if (keysPressed.contains(Qt::Key_A)){
+        if(centerX-hunter->getSpeedX() > 0) newX -= hunter->getSpeedX(); // 左
+        else newX = this->width();
+    }
+    if (keysPressed.contains(Qt::Key_D)){
+        if(centerX+hunter->getSpeedX() < this->width()) newX += hunter->getSpeedX(); // 右
+        else newX = 0;
+    }
+
 
     hunter->move(newX, newY);
-
 }
 
 
 template<class T>
-void MainWindow::chase(T *monster){
+void MainWindow::chaseBy(T *monster){
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, [=]() {
         if (monster != nullptr) {

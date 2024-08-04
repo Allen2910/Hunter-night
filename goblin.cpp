@@ -9,54 +9,40 @@
 #include <QProgressBar>
 
 
-goblin::goblin(QWidget *parent)
-    :goblin_image(":/images/15.jpg"), character(parent,100,10,5), speed(10){
+void goblin::initCharacter(){
+    // character::initCharacter();
+
+    goblin_image.load(":/images/15.jpg");
     if(goblin_image.isNull()){
-        qDebug("Failed to load goblin image1");
+        qDebug("Failed to load goblin image");
+    }else{
+        qDebug() << "Image size:" << goblin_image.size();
     }
-    setPixmap(goblin_image.scaled(250, 250, Qt::KeepAspectRatio));
+
+    setFixedSize(150, (150)+30);  // 250 for image, 30 for progressbar
+    imageLabel->setPixmap(goblin_image.scaled(250, 250, Qt::KeepAspectRatio));
+}
+
+goblin::goblin(QWidget *parent)
+    :character(parent,100,20,10), speed(10){
+
+    initCharacter();
+
 }
 
 goblin::goblin(QWidget *parent, int x, int y)
-    :goblin_image(":/images/15.jpg"), character(parent,100,10,5), speed(10){
-    if(goblin_image.isNull()){
-        qDebug("Failed to load goblin image1");
-    }
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    : character(parent,100,20,10), speed(10){
 
+    initCharacter();
+    move(x,y);
 
-    // init image
-    setGeometry(x, y, 250, 250);
-    setPixmap(goblin_image.scaled(200, 200, Qt::KeepAspectRatioByExpanding));
-
-
-    // init progress bar value
-    progressBar = new QProgressBar(this);
-    progressBar->setRange(0,this->getHp());
-    progressBar->setValue(this->getHp());
-
-    // init progress bar pos and size
-    progressBar->setFixedHeight(8);
-    progressBar->setStyleSheet("QProgressBar::chunk { background-color: red; }"
-                               "QProgressBar { border: 1px solid #CCCCCC; border-radius: 5px; }");
-    progressBar->setAlignment(Qt::AlignCenter);
-
-    layout->addWidget(this);
-    layout->addWidget(progressBar);
-    layout->setAlignment(this, Qt::AlignTop);
-    layout->setAlignment(progressBar, Qt::AlignBottom);
-
-    //parent->setLayout(layout);
 }
 
-void goblin::updateProgressBar(){
-    progressBar->setValue(this->getHp());
-}
+
 
 void goblin::getDamage(int atkPoint){
-    qDebug() << this->getHp() << '\n' << atkPoint << '\n';
+    // qDebug() << this->getHp() << '\n' << atkPoint << '\n';
     this->changeHp(atkPoint);
-    this->updateProgressBar();
 }
 
 QPixmap goblin::get_goblin_image()const{
@@ -71,3 +57,19 @@ void goblin::getAttackedPoint(int damage){
     int temp =  damage-this->getDef() >= 0 ? damage-this->getDef() : 0;
     this->getDamage(-temp);
 }
+/*
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, [this]() {
+        if(this != nullptr){
+            progressBar->setGeometry(0, this->height(), progressBar->width(), progressBar->height());
+            progressBar->raise();
+        }
+        // debugging test
+        qDebug("goblin::x:%lf y:%lf", this->getX(), this->getY());
+        qDebug("progressbar::x:%d y:%d width:%d height:%d",
+               progressBar->x(), progressBar->y(), progressBar->width(), progressBar->height());
+        qDebug("goblin::x:%lf y:%lf\n", this->getX(), this->getY());
+        qDebug("progressbar::x:%lf y:%lf\n", progressBar->pos().x(), progressBar->pos().y());
+    });
+    timer->start(20);
+*/

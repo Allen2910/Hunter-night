@@ -32,12 +32,17 @@ public:
     void chasing(T*, double, double);
     template<class T>
     void bulletHitMonster(bullet*, T*);
+    void AttackedByGoblin();
 public slots:
     void bulletShooting(bullet*, double, double);
     void upgradePostion();
 protected:
     template<class T>
     bool isCollision(bullet*, T*);
+    template<class T>
+    bool isCollision(T*);
+    template<class T>
+    bool isCollision(bullet*, QSharedPointer<T>);
 
 private:
     Ui::MainWindow *ui;
@@ -46,6 +51,11 @@ private:
     QSet<int> keysPressed;
     QSet<goblin*> goblinList;
     template<class T>
+    void repel(T*);
+    template<class T>
     void repel(T*, double, double);
+    template<class T>
+    void repel(QSharedPointer<T>, double, double);
+    void repel();
 };
 #endif // MAINWINDOW_H

@@ -14,6 +14,7 @@ SOURCES += \
     bullet.cpp \
     character.cpp \
     goblin.cpp \
+    initalscreen.cpp \
     main.cpp \
     main_character.cpp \
     mainwindow.cpp
@@ -22,10 +23,12 @@ HEADERS += \
     bullet.h \
     character.h \
     goblin.h \
+    initalscreen.h \
     main_character.h \
     mainwindow.h
 
 FORMS += \
+    initalscreen.ui \
     mainwindow.ui
 
 # Default rules for deployment.

@@ -7,6 +7,7 @@
 #include <qwidget.h>
 #include <QLabel>
 #include <qprogressbar.h>
+#include <qmutex.h>
 
 
 class goblin:public character{
@@ -17,11 +18,15 @@ public:
     int getSpeed()const;
     void getAttackedPoint(int);
     void updateProgressBar();
+    // minisec
+    int fps;
+protected:
+    void initCharacter()override;
 private:
     void getDamage(int);
     QPixmap goblin_image;
-    QProgressBar *progressBar;
     int speed;
+    mutable QMutex mutex;
 };
 #endif // GOBLIN_H
 

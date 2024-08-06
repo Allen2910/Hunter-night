@@ -22,11 +22,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     setFocusPolicy(Qt::StrongFocus);
 
-    // QPushButton *startButton = new QPushButton("&Start", this);
-
 
     // put the hunter image on mainwindow
     hunter->show();
+    hunter->raise();
 
     // upgrade the hunter pos
     QTimer *hunterTimer = new QTimer(this);
@@ -57,25 +56,25 @@ MainWindow::MainWindow(QWidget *parent)
         if(frequency > 200){
             frequency /= 2;
         }
-        int random = QRandomGenerator::global()->bounded(0,500);
-        int x, y;
-        if(random % 2 == 0){
-            if(random < 250){
-                x = 1;
-            }else{
-                x = this->width()-1;
-            }
-            y = QRandomGenerator::global()->bounded(0,this->height());
-        }else{
-            if(random < 250){
-                y = 1;
-            }else{
-                y = this->height()-1;
-            }
-            x = QRandomGenerator::global()->bounded(0,this->width());
-        }
         for(int i = 0; i < amount; i++){
-            goblin *label_goblin = new goblin(this,QRandomGenerator::global()->bounded(0,500), QRandomGenerator::global()->bounded(0,500));
+            int random = QRandomGenerator::global()->bounded(0,500);
+            int x, y;
+            if(random % 2 == 0){
+                if(random < 250){
+                    x = 1;
+                }else{
+                    x = this->width()-1;
+                }
+                y = QRandomGenerator::global()->bounded(0,this->height());
+            }else{
+                if(random < 250){
+                    y = 1;
+                }else{
+                    y = this->height()-1;
+                }
+                x = QRandomGenerator::global()->bounded(0,this->width());
+            }
+            goblin *label_goblin = new goblin(this, x, y);
             goblinList.insert(label_goblin);
             label_goblin->show();
             chaseBy(label_goblin);
